@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= blocks.title %>
+    </title>
+
+    <link rel='stylesheet' href='/css/layout.css' />
+    <link rel='stylesheet' href='/css/article.css' />
+    <link rel='stylesheet' href='/css/navbar.css' />
+
+</head>
+
+<body>
+    <div class="header-container">
+        <div class="wrapper">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="https://nodejs.org/">Powered by NodeJs</a>
+                </div>
+            </div>
+
+            <% if (user) { %>
+                <div class="welcome-user">Welcome, <%= user.username %> </div>
+                <% } %>
+
+        </div>
+    </div>
+
+    <div class="content-container">
+        <%- partial('../partials/topNavigation') %>
+    </div>
+
+    <div id="content" class="content-container">
+        <%-body -%>
+    </div>
+    <!-- <h1><%= blocks.title %></h1> -->
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/script.js"></script>
+
+</body>
+
+</html>

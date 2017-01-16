@@ -1,0 +1,20 @@
+<% layout('./layout/page') -%>
+    <% block('title', articleId ? 'Редактировать статью' : 'Создать статью') %>
+
+    <div class="article-container">
+        <form action="<%= actionUrl %>" method="post">
+            <input type="hidden" name='articleId' value="<%= articleId %>">
+            <input type="hidden" name='userId' value="<%= userId %>">
+            <input type="hidden" name='userName' value="<%= userName %>">
+            <div class="author">
+               Title:
+             </div>
+            <input type="text" name="title" value="<%= title %>"><br>
+            Article Content:<br>
+            <textarea rows="4" cols="50" type="text" name="content"><%= content %></textarea><br>
+
+            <input class="create-btn" type="submit" value="<%= articleId ? 'Update' : 'Create' %> ">
+
+        </form>
+
+    </div>

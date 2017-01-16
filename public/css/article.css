@@ -1,0 +1,131 @@
+.content-container .back-btn {
+    cursor: pointer;
+    border: solid 1px orange;
+    font-weight: bold;
+    padding: 8px;
+    text-align: center;
+    margin: 15px;
+    width: 70px;
+}
+
+.content-container .back-btn:hover {
+    background-color: #ffc183;
+}
+
+.content-container .create-btn {
+    cursor: pointer;
+    border: solid 1px orange;
+    font-weight: bold;
+    padding: 8px;
+    text-align: center;
+    margin: 15px;
+    width: 100px;
+}
+
+.content-container .create-btn:hover {
+    background-color: #ffc183;
+}
+
+.content-container .create-link {
+  text-decoration: none;
+}
+
+.article-container {
+    margin-top: 5px;
+    background-color: white;
+    padding: 15px;
+}
+
+.article-container:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.article-container .body {
+    padding-right: 5px;
+    /*display: inline-block;*/
+    overflow: hidden;
+}
+
+.article-container .body .title {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: left;
+}
+
+.article-container .body .title a {
+    color: red;
+    text-decoration: none;
+}
+
+.article-container .body .author {
+    color: green;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.article-container .body .publish-at {
+    color: green;
+    text-align: left;
+    margin-top: 15px;
+}
+
+.article-container .image {
+    float: right;
+    margin-left: 15px;
+    display: table;
+}
+
+.article-container .image .floater {
+    display: table-cell;
+    vertical-align: middle;
+    width: 250px;
+    height: 150px;
+}
+
+.article-container .image img {
+    border: 0px;
+    float: right;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Portrait tablet to landscape and desktop */
+
+@media all and (min-width: 768px) and (max-width: 979px) {
+    .content-container {
+        width: 100%;
+    }
+    .article-container {
+        padding: 15px;
+        /*display: flex;*/
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+@media all and (min-width: 551px) and (max-width: 768px) {
+    .content-container {
+        width: 100%;
+    }
+}
+
+
+/* Landscape phone to portrait tablet */
+
+@media all and (max-width: 550px) {
+    .content-container {
+        width: 100%;
+    }
+    .article-container .body {
+        width: 100%;
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+    .article-container .image {
+        display: none;
+    }
+}

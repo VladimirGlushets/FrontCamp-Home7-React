@@ -1,0 +1,48 @@
+<% layout('./layout/page') -%>
+    <% block('title', 'Все статьи') %>
+
+        <div>
+
+            <div class="create-btn">
+                <a class="create-link" href='<%= createNewArticleUrl %>'>Create New</a>
+            </div>
+
+            <% articles.forEach(function(article) { %>
+
+                <div class="article-container">
+                    <div class="body">
+                        <div class="image">
+
+                            <% if (user) { %>
+                                <div>
+                                    <a class="delete-article" href='<%= article.deleteArticleUrl %>' data-id='<%= article._id %>'>Remove</a>
+                                </div>
+                                <div>
+                                    <a class="update-article" href='<%= article.updateArticleUrl %>'>Update</a>
+                                </div>
+                                <% } %>
+
+                                    <div class="floater">
+                                        <a href="http://www.abc.net.au/news/2016-12-28/australia-pakistan-mcg-second-test-day-three/8151468" target="_blank"><img src="http://www.abc.net.au/news/image/8151536-1x1-700x700.jpg"></a>
+                                    </div>
+                        </div>
+                        <div class="title">
+                            <a href='<%= article.detailArticleUrl %>'>
+                                <%= article.title %>
+                            </a>
+                        </div>
+                        <div class="author">
+                            <%= article.user.name %>
+                        </div>
+                        <div class="description">
+                            <%= article.content %>
+                        </div>
+                        <div class="publish-at">
+                            <%= article.createdDate %>
+                        </div>
+                    </div>
+                </div>
+
+                <% }); %>
+
+        </div>

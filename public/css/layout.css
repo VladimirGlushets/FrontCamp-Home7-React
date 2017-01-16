@@ -1,0 +1,64 @@
+body {
+    margin: 0px;
+    background-color: linen;
+}
+
+.header-container {
+    background: #ffc183;
+}
+
+.header-container .wrapper {
+    width: 50%;
+    margin: auto;
+    position: relative;
+}
+
+.header-container .header-content {
+    display: inline-block;
+}
+
+.header-container .wrapper .logo {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-size: 36px;
+}
+
+.logo a {
+    text-decoration: none;
+}
+
+.welcome-user {
+    float: right;
+    font-size: 20px;
+    float: right;
+    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.content-container {
+    width: 50%;
+    margin: auto;
+}
+
+.btn {
+    cursor: pointer;
+    border: solid 1px orange;
+    font-weight: bold;
+    padding: 8px;
+    text-align: center;
+    margin: 15px;
+    width: 70px;
+}
+
+#show-news {
+    width: 100%;
+    margin-top: 30px;
+    font-size: xx-large;
+}
+
+#show-news:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: #ffc183;
+}

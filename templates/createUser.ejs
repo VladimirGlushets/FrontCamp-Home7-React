@@ -1,0 +1,18 @@
+<% layout('./layout/page') -%>
+    <% block('title', 'Вход') %>
+
+        <div class="article-container">
+            <form action="/users/create" method="post">
+                <div class="author">
+                Name:
+                </div>
+                <input type="text" name="username"><br>
+                Email:<br>
+                <input type="text" name="email"><br>
+                Password:<br>
+                <input type="password" name="password"><br>
+
+                <input class="create-btn" type="submit" value="Create">
+
+            </form>
+        </div>

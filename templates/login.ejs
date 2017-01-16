@@ -1,0 +1,23 @@
+<% layout('./layout/page') -%>
+    <% block('title', 'Вход') %>
+
+        <div class="article-container">
+            <form action="/login" method="post">
+                Email:<br>
+                <input type="text" name="email"><br> Password:
+                <br>
+                <input type="password" name="password"><br>
+
+                <input class="create-btn" type="submit" value="LogIn">
+            </form>
+
+            <p>
+                <a href="/users/create">Create new user</a>
+            </p>
+        </div>
+        <div class="article-container">
+          <p>
+              For testing you can use exist user (email: test@tut.by, password: 111)
+              or you can create new user.
+          </p>
+        </div>
