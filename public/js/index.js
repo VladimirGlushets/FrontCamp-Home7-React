@@ -1,19 +1,17 @@
-//var React = require('react');
-//var ReactDOM = require('react-dom');
-//var HelloWorldReact = require('../components/helloWorldReact');
-//
-//ReactDOM.render(
-//    <HelloWorldReact />,
-//    document.getElementById('react-root')
-//);
+import React from 'react';
+import ReactDOM from 'react-dom';
+import DataService from './Services/DataService';
+import ArticleList from './Components/Articles/ArticleList';
 
-var React = require('react');
-var ReactDOM = require('react-dom');
+var dataService = new DataService();
 
-class MyComponent extends React.Component {
-    render() {
-        return <div>Hello World</div>;
+dataService.getAllArticles().then((data) => {
+    if (!data) {
+        console.log(data);
+    } else {
+        ReactDOM.render(<ArticleList articles={data}/>, document.getElementById('react-root'));
     }
-}
+}).catch((err) => {
+    console.log(err);
+});
 
-ReactDOM.render(<MyComponent />, document.getElementById('react-root'));

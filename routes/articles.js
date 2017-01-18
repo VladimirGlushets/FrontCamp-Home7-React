@@ -9,8 +9,14 @@ var passportModule = require('../authentication');
 router.get('/',
     function(req, res, next) {
         var controller = new ArticleController(req, res, next);
-        controller.index();
+        controller.reactIndex();
     });
+
+//router.get('/',
+//    function(req, res, next) {
+//        var controller = new ArticleController(req, res, next);
+//        controller.index();
+//    });
 
 router.get('/login', function(req, res, next) {
     var controller = new UserController(req, res, next);

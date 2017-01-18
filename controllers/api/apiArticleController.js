@@ -14,7 +14,17 @@ class ApiArticleController {
 
     getAllArticles() {
         this.articleService.getAllArticles().then((articles) => {
-            this.sendResult(articles);
+            var list = [];
+            for (var i = 0; i < articles.length; i++) {
+                var obj = {};
+                obj.detailArticleUrl = UrlsHelper.getDetailsUrl(this.req.protocol, this.req.headers.host, articles[i]._id);
+                obj.deleteArticleUrl = UrlsHelper.getDeleteUrl(this.req.protocol, this.req.headers.host);
+                obj.updateArticleUrl = UrlsHelper.getUpdateViewUrl(this.req.protocol, this.req.headers.host, articles[i]._id);
+                list.push({article: articles[i], actionUrls: obj});
+            }
+
+            console.log(list);
+            this.sendResult(list);
         }).catch((err) => {
             this.sendBadResult(err.stack);
         });
@@ -53,8 +63,8 @@ class ApiArticleController {
     }
 
     sendResult(data) {
-        this.res.send(JSON.stringify(data));
-        //this.res.json(data);
+        //this.res.send(JSON.stringify(data));
+        this.res.json(data);
     }
 
     sendBadResult(errorMessage) {

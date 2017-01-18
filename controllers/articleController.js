@@ -12,6 +12,10 @@ class ArticleController extends BaseController  {
         this.articleService = new ArticleService();
     }
 
+    reactIndex() {
+        this.renderView(this.res, 'articlesReact');
+    }
+
     index() {
         this.articleService.getAllArticles().then((articles) => {
 
