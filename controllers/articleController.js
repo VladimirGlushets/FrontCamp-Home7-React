@@ -1,8 +1,15 @@
+var React = require('react');
+var ReactDOMServer = require('react-dom/server');
+
 var BaseController = require('./baseController');
 var ArticleService = require('../services/articleService');
 var UrlsHelper = require('../helpers/urlsHelper');
+var layout = require('../templates/layout/reactLayout');
 
-class ArticleController extends BaseController  {
+import Index from '../public/js/Pages/Index';
+
+
+class ArticleController extends BaseController {
     constructor(req, res, next) {
         super(req, res);
 
@@ -12,30 +19,36 @@ class ArticleController extends BaseController  {
         this.articleService = new ArticleService();
     }
 
-    reactIndex() {
-        this.renderView(this.res, 'articlesReact');
-    }
-
     index() {
-        this.articleService.getAllArticles().then((articles) => {
+        let user;
+        if (this.req.user) {
+            user = this.req.user.username;
+        }
 
-                for (var i = 0; i < articles.length; i++) {
-                    articles[i].detailArticleUrl = UrlsHelper.getDetailsUrl(this.req.protocol, this.req.headers.host, articles[i]._id);
-                    articles[i].deleteArticleUrl = UrlsHelper.getDeleteUrl(this.req.protocol, this.req.headers.host);
-                    articles[i].updateArticleUrl = UrlsHelper.getUpdateViewUrl(this.req.protocol, this.req.headers.host, articles[i]._id);
-                }
+        require(["../public/js/Pages/Index"],
+            (Index) => {
+                this.articleService.getAllArticles().then((data) => {
+                    if (!data) {
+                        console.log(data);
+                    } else {
+                        var articles = [];
+                        for (var i = 0; i < data.length; i++) {
+                            var obj = {};
+                            obj.detailArticleUrl = UrlsHelper.getDetailsUrl(this.req.protocol, this.req.headers.host, data[i]._id);
+                            obj.deleteArticleUrl = UrlsHelper.getDeleteUrl(this.req.protocol, this.req.headers.host);
+                            obj.updateArticleUrl = UrlsHelper.getUpdateViewUrl(this.req.protocol, this.req.headers.host, data[i]._id);
+                            articles.push({article: data[i], actionUrls: obj});
+                        }
 
-                var renderData = {
-                    createNewArticleUrl: UrlsHelper.getCreateUrl(this.req.protocol, this.req.headers.host),
-                    articles: articles
-                }
-
-                this.renderView(this.res, 'articles', renderData);
-            },
-            function(err) {
-                throw err;
-            }
-        );
+                        const initialState = { user, articles };
+                        var Component = Index.default;
+                        let renderedString = ReactDOMServer.renderToString(<Component {...initialState} />);
+                        this.renderViewReact(this.res, 'Articles', renderedString, initialState);
+                    }
+                }).catch((err) => {
+                    console.log(err);
+                });
+            });
     }
 
     details(articleId) {
@@ -49,7 +62,7 @@ class ArticleController extends BaseController  {
 
                 this.renderView(this.res, 'articleDetails', renderData);
             },
-            function(err) {
+            function (err) {
                 throw err;
             }
         );
@@ -62,13 +75,14 @@ class ArticleController extends BaseController  {
                     redirectUrl: UrlsHelper.getHomeUrl(this.req.protocol, this.req.headers.host)
                 });
             },
-            function(err) {
+            function (err) {
                 throw err;
             }
         );
     }
 
     createArticleView(articleId) {
+        console.log("????");
         var renderData = {};
 
         if (articleId) {
@@ -102,7 +116,7 @@ class ArticleController extends BaseController  {
                 this.res.setHeader("Location", "/");
                 this.res.end();
             },
-            function(err) {
+            function (err) {
                 throw err;
             }
         );
@@ -114,6 +128,14 @@ class ArticleController extends BaseController  {
             this.res.setHeader("Location", "/");
             this.res.end();
         });
+    }
+
+    renderViewReact(res, title, renderedString, initialState) {
+        res.send(layout({
+            body: renderedString,
+            title: title,
+            initialState: JSON.stringify(initialState)
+        }));
     }
 
     renderView(res, templateName, data) {

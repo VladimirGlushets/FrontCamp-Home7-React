@@ -8,13 +8,15 @@ export default class ArticleList extends React.Component {
     render() {
         let { articles, user } = this.props;
 
-        let articlesComponents = articles.map((data) => (
-            <Article
+        let articlesComponents = articles.map((data) => {
+            return (<Article
+                key={data.article._id}
                 article={data.article}
                 actionUrls={data.actionUrls}
                 user={user}
-            />
-        ));
+            />)
+        });
+
         return (
             <div>
                 <div className="create-btn">

@@ -9,9 +9,9 @@ dataService.getAllArticles().then((data) => {
     if (!data) {
         console.log(data);
     } else {
-      var renderContainer = document.getElementById('react-root');
-      var user = renderContainer.dataset.user;
-      ReactDOM.render(<ArticleList articles={data} user={user}/>, renderContainer);
+      var renderContainer = document.getElementById('content');
+
+      ReactDOM.render(<ArticleList articles={data} user={null}/>, renderContainer);
     }
 }).catch((err) => {
     console.log(err);

@@ -38,8 +38,8 @@ app.use(session({
     store: new MongoStore({
         mongooseConnection: mongoose.connection
     }),
-    secret: config.get('session:secret'),
-    key: config.get('session:key')
+    secret: "KillerIsJim",
+    key: "sid"
     // resave: false,
     // saveUninitialized: false
 }));

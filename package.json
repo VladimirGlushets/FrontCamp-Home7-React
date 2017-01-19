@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "compile": "babel -d public/build/ public/js/"
+    "startb": "webpack --progress && node server",
+    "production": "webpack -p --progress && node server"
   },
   "dependencies": {
     "async": "^2.1.4",
     "async-series": "0.0.1",
+    "babel-preset-node6": "^11.0.0",
     "body-parser": "~1.15.2",
     "classnames": "^2.2.5",
     "config": "^1.24.0",
@@ -26,11 +28,13 @@
     "mongoose": "^4.7.5",
     "morgan": "~1.7.0",
     "nconf": "^0.8.4",
+    "node-jsx": "^0.13.3",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "webpack-node-externals": "^1.5.4"
   },
   "devDependencies": {
     "async": "^2.1.4",

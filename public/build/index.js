@@ -71,9 +71,9 @@ var index =
 	    if (!data) {
 	        console.log(data);
 	    } else {
-	        var renderContainer = document.getElementById('react-root');
-	        var user = renderContainer.dataset.user;
-	        _reactDom2.default.render(_react2.default.createElement(_ArticleList2.default, { articles: data, user: user }), renderContainer);
+	        var renderContainer = document.getElementById('content');
+	
+	        _reactDom2.default.render(_react2.default.createElement(_ArticleList2.default, { articles: data, user: null }), renderContainer);
 	    }
 	}).catch(function (err) {
 	    console.log(err);
@@ -21669,11 +21669,13 @@ var index =
 	
 	            var articlesComponents = articles.map(function (data) {
 	                return _react2.default.createElement(_Article2.default, {
+	                    key: data.article._id,
 	                    article: data.article,
 	                    actionUrls: data.actionUrls,
 	                    user: user
 	                });
 	            });
+	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -21765,7 +21767,7 @@ var index =
 /* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -21776,6 +21778,10 @@ var index =
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(181);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21795,80 +21801,133 @@ var index =
 	    }
 	
 	    _createClass(Article, [{
-	        key: "render",
+	        key: 'deleteArticle',
+	        value: function deleteArticle(url, article) {
+	            axios({
+	                method: 'delete',
+	                url: url,
+	                data: {
+	                    articleId: article._id
+	                }
+	            }).then(function (response) {
+	                window.location = response.data.redirectUrl;
+	            });
+	        }
+	    }, {
+	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+	
 	            var _props = this.props,
 	                article = _props.article,
 	                actionUrls = _props.actionUrls,
 	                user = _props.user;
 	
+	
+	            console.log(article);
+	            console.log(actionUrls);
 	            var actions = user ? _react2.default.createElement(
-	                "div",
+	                'div',
 	                null,
 	                _react2.default.createElement(
-	                    "div",
+	                    'div',
 	                    null,
 	                    _react2.default.createElement(
-	                        "a",
-	                        { className: "delete-article", href: actionUrls.deleteArticleUrl, "data-id": article._id },
-	                        "Remove"
+	                        'a',
+	                        { className: 'delete-article', href: '#', onClick: function onClick(e) {
+	                                e.preventDefault();
+	                                _this2.deleteArticle(actionUrls.deleteArticleUrl, article);
+	                            } },
+	                        'Remove'
 	                    )
 	                ),
 	                _react2.default.createElement(
-	                    "div",
+	                    'div',
 	                    null,
 	                    _react2.default.createElement(
-	                        "a",
-	                        { className: "update-article", href: actionUrls.updateArticleUrl },
-	                        "Update"
+	                        'a',
+	                        { className: 'update-article', href: actionUrls.updateArticleUrl },
+	                        'Update'
 	                    )
 	                )
 	            ) : '';
 	
-	            debugger;
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "article-container" },
+	                'div',
+	                { className: 'article-container' },
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "body" },
+	                    'div',
+	                    { className: 'body' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "image" },
-	                        actions,
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "floater" },
+	                        'div',
+	                        { className: 'image' },
+	                        user ? _react2.default.createElement(
+	                            'div',
+	                            null,
 	                            _react2.default.createElement(
-	                                "a",
-	                                { href: "http://www.abc.net.au/news/2016-12-28/australia-pakistan-mcg-second-test-day-three/8151468", target: "_blank" },
-	                                _react2.default.createElement("img", { src: "http://www.abc.net.au/news/image/8151536-1x1-700x700.jpg" })
+	                                'div',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { className: 'delete-article', href: '#', onClick: function onClick(e) {
+	                                            e.preventDefault();
+	                                            _this2.deleteArticle(actionUrls.deleteArticleUrl, article);
+	                                        } },
+	                                    'Remove'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { className: 'update-article', href: actionUrls.updateArticleUrl },
+	                                    'Update'
+	                                )
+	                            )
+	                        ) : '',
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'floater' },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: 'http://www.abc.net.au/news/2016-12-28/australia-pakistan-mcg-second-test-day-three/8151468',
+	                                    target: '_blank' },
+	                                _react2.default.createElement('img', { src: 'http://www.abc.net.au/news/image/8151536-1x1-700x700.jpg' })
 	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "title" },
+	                        'div',
+	                        { className: 'title' },
 	                        _react2.default.createElement(
-	                            "a",
+	                            'a',
 	                            { href: actionUrls.detailArticleUrl },
 	                            article.title
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "author" },
-	                        article.user.name
+	                        'div',
+	                        { className: 'author' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'author' },
+	                            article.user.name
+	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "description" },
+	                        'div',
+	                        { className: 'description' },
 	                        article.content
 	                    ),
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "publish-at" },
-	                        article.createdDate
+	                        'div',
+	                        { className: 'publish-at' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            article.createdDate.toString()
+	                        )
 	                    )
 	                )
 	            );
@@ -21877,6 +21936,37 @@ var index =
 	
 	    return Article;
 	}(_react2.default.Component);
+	
+	//return (
+	//    <div className="article-container">
+	//        <div className="body">
+	//            <div className="image">
+	//                {actions}
+	//                <div className="floater">
+	//                    <a href="http://www.abc.net.au/news/2016-12-28/australia-pakistan-mcg-second-test-day-three/8151468"
+	//                       target="_blank">
+	//                        <img src="http://www.abc.net.au/news/image/8151536-1x1-700x700.jpg"/>
+	//                    </a>
+	//                </div>
+	//            </div>
+	//            <div className="title">
+	//                <a href={actionUrls.detailArticleUrl}>
+	//                    {article.title}
+	//                </a>
+	//            </div>
+	//            <div className="author">
+	//                {article.user.name}
+	//            </div>
+	//            <div className="description">
+	//                {article.content}
+	//            </div>
+	//            <div className="publish-at">
+	//                {article.createdDate}
+	//            </div>
+	//        </div>
+	//    </div>
+	//);
+	
 	
 	exports.default = Article;
 
