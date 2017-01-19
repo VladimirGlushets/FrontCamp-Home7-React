@@ -71,7 +71,9 @@ var index =
 	    if (!data) {
 	        console.log(data);
 	    } else {
-	        _reactDom2.default.render(_react2.default.createElement(_ArticleList2.default, { articles: data }), document.getElementById('react-root'));
+	        var renderContainer = document.getElementById('react-root');
+	        var user = renderContainer.dataset.user;
+	        _reactDom2.default.render(_react2.default.createElement(_ArticleList2.default, { articles: data, user: user }), renderContainer);
 	    }
 	}).catch(function (err) {
 	    console.log(err);
@@ -21660,13 +21662,16 @@ var index =
 	    _createClass(ArticleList, [{
 	        key: 'render',
 	        value: function render() {
-	            var articles = this.props.articles;
+	            var _props = this.props,
+	                articles = _props.articles,
+	                user = _props.user;
 	
 	
 	            var articlesComponents = articles.map(function (data) {
 	                return _react2.default.createElement(_Article2.default, {
 	                    article: data.article,
-	                    actionUrls: data.actionUrls
+	                    actionUrls: data.actionUrls,
+	                    user: user
 	                });
 	            });
 	            return _react2.default.createElement(
@@ -21688,9 +21693,6 @@ var index =
 	
 	    return ArticleList;
 	}(_react2.default.Component);
-	
-	//this.props
-	
 	
 	exports.default = ArticleList;
 
@@ -21797,8 +21799,33 @@ var index =
 	        value: function render() {
 	            var _props = this.props,
 	                article = _props.article,
-	                actionUrls = _props.actionUrls;
+	                actionUrls = _props.actionUrls,
+	                user = _props.user;
 	
+	            var actions = user ? _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "a",
+	                        { className: "delete-article", href: actionUrls.deleteArticleUrl, "data-id": article._id },
+	                        "Remove"
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "a",
+	                        { className: "update-article", href: actionUrls.updateArticleUrl },
+	                        "Update"
+	                    )
+	                )
+	            ) : '';
+	
+	            debugger;
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "article-container" },
@@ -21808,24 +21835,7 @@ var index =
 	                    _react2.default.createElement(
 	                        "div",
 	                        { className: "image" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            null,
-	                            _react2.default.createElement(
-	                                "a",
-	                                { className: "delete-article", href: actionUrls.deleteArticleUrl, "data-id": article._id },
-	                                "Remove"
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            "div",
-	                            null,
-	                            _react2.default.createElement(
-	                                "a",
-	                                { className: "update-article", href: actionUrls.updateArticleUrl },
-	                                "Update"
-	                            )
-	                        ),
+	                        actions,
 	                        _react2.default.createElement(
 	                            "div",
 	                            { className: "floater" },

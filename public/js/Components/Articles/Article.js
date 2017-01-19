@@ -6,20 +6,23 @@ export default class Article extends React.Component{
     }
 
     render(){
-        let {
-            article,
-            actionUrls
-            } = this.props;
+        let { article, actionUrls, user } = this.props;
+        let actions = user ? (<div>
+          <div>
+            <a className="delete-article" href={actionUrls.deleteArticleUrl} data-id={article._id}>Remove</a>
+        </div>
+        <div>
+            <a className="update-article" href={actionUrls.updateArticleUrl}>Update</a>
+        </div>
+        </div>
+      ): '';
+
+        debugger;
         return(
             <div className="article-container">
                 <div className="body">
                     <div className="image">
-                        <div>
-                            <a className="delete-article" href={actionUrls.deleteArticleUrl} data-id={article._id}>Remove</a>
-                        </div>
-                        <div>
-                            <a className="update-article" href={actionUrls.updateArticleUrl}>Update</a>
-                        </div>
+                        {actions}
                         <div className="floater">
                             <a href="http://www.abc.net.au/news/2016-12-28/australia-pakistan-mcg-second-test-day-three/8151468" target="_blank">
                                 <img src="http://www.abc.net.au/news/image/8151536-1x1-700x700.jpg"/>

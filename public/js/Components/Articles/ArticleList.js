@@ -6,12 +6,13 @@ import Article from './Article';
 export default class ArticleList extends React.Component {
 
     render() {
-        let { articles } = this.props;
+        let { articles, user } = this.props;
 
         let articlesComponents = articles.map((data) => (
             <Article
                 article={data.article}
                 actionUrls={data.actionUrls}
+                user={user}
             />
         ));
         return (
@@ -24,5 +25,3 @@ export default class ArticleList extends React.Component {
         );
     }
 }
-
-//this.props
