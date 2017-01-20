@@ -13,7 +13,7 @@ export default class Header extends React.Component {
                 <div className="wrapper">
                     <div className="header-content">
                         <div className="logo">
-                            <a href="https://nodejs.org/">Powered by NodeJs</a>
+                            <a href="https://nodejs.org/">Powered by NodeJs and React</a>
                         </div>
                     </div>
                     {user ? (

@@ -1,4 +1,4 @@
-var index =
+var articlesBundle =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -55,29 +55,16 @@ var index =
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _DataService = __webpack_require__(178);
-	
-	var _DataService2 = _interopRequireDefault(_DataService);
-	
-	var _ArticleList = __webpack_require__(180);
+	var _ArticleList = __webpack_require__(178);
 	
 	var _ArticleList2 = _interopRequireDefault(_ArticleList);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var dataService = new _DataService2.default();
-	
-	dataService.getAllArticles().then(function (data) {
-	    if (!data) {
-	        console.log(data);
-	    } else {
-	        var renderContainer = document.getElementById('content');
-	
-	        _reactDom2.default.render(_react2.default.createElement(_ArticleList2.default, { articles: data, user: null }), renderContainer);
-	    }
-	}).catch(function (err) {
-	    console.log(err);
-	});
+	var renderContainer = document.getElementById('content');
+	if (renderContainer) {
+	  _reactDom2.default.render(_react2.default.createElement(_ArticleList2.default, { articles: __APP_INITIAL_STATE__.articles, user: __APP_INITIAL_STATE__.user }), renderContainer);
+	}
 
 /***/ },
 /* 1 */
@@ -21567,78 +21554,19 @@ var index =
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _UrlConstants = __webpack_require__(179);
-	
-	var _UrlConstants2 = _interopRequireDefault(_UrlConstants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var DataService = function () {
-	    function DataService() {
-	        _classCallCheck(this, DataService);
-	    }
-	
-	    _createClass(DataService, [{
-	        key: 'getAllArticles',
-	        value: function getAllArticles() {
-	            return axios.get(_UrlConstants2.default.SourceArticlesUrl).then(function (response) {
-	                if (response.status != 200) {
-	                    console.log(response);
-	                } else {
-	                    return response.data;
-	                }
-	            }).catch(function (err) {
-	                console.log(err);
-	            });
-	        }
-	    }]);
-	
-	    return DataService;
-	}();
-	
-	exports.default = DataService;
-
-/***/ },
-/* 179 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-	    SourceArticlesUrl: 'http://localhost:3000/api/articles',
-	    CreateNewArticleUrl: 'http://localhost:3000/articles/create'
-	};
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(181);
+	var _classnames = __webpack_require__(179);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _UrlConstants = __webpack_require__(179);
+	var _UrlConstants = __webpack_require__(181);
 	
 	var _UrlConstants2 = _interopRequireDefault(_UrlConstants);
 	
-	var _Article = __webpack_require__(183);
+	var _Article = __webpack_require__(182);
 	
 	var _Article2 = _interopRequireDefault(_Article);
 	
@@ -21671,7 +21599,9 @@ var index =
 	                return _react2.default.createElement(_Article2.default, {
 	                    key: data.article._id,
 	                    article: data.article,
-	                    actionUrls: data.actionUrls,
+	                    deleteArticleUrl: data.actionUrls.deleteArticleUrl,
+	                    updateArticleUrl: data.actionUrls.updateArticleUrl,
+	                    detailArticleUrl: data.actionUrls.detailArticleUrl,
 	                    user: user
 	                });
 	            });
@@ -21699,7 +21629,7 @@ var index =
 	exports.default = ArticleList;
 
 /***/ },
-/* 181 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
@@ -21745,7 +21675,7 @@ var index =
 	
 		if (typeof module !== 'undefined' && module.exports) {
 			module.exports = classNames;
-		} else if ("function" === 'function' && _typeof(__webpack_require__(182)) === 'object' && __webpack_require__(182)) {
+		} else if ("function" === 'function' && _typeof(__webpack_require__(180)) === 'object' && __webpack_require__(180)) {
 			// register as 'classnames', consistent with npm package name
 			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
 				return classNames;
@@ -21756,7 +21686,7 @@ var index =
 	})();
 
 /***/ },
-/* 182 */
+/* 180 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -21764,7 +21694,21 @@ var index =
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 183 */
+/* 181 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+	    SourceArticlesUrl: 'http://localhost:3000/api/articles',
+	    CreateNewArticleUrl: 'http://localhost:3000/articles/create'
+	};
+
+/***/ },
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21779,7 +21723,7 @@ var index =
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(181);
+	var _classnames = __webpack_require__(179);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -21820,12 +21764,12 @@ var index =
 	
 	            var _props = this.props,
 	                article = _props.article,
-	                actionUrls = _props.actionUrls,
+	                deleteArticleUrl = _props.deleteArticleUrl,
+	                updateArticleUrl = _props.updateArticleUrl,
+	                detailArticleUrl = _props.detailArticleUrl,
 	                user = _props.user;
 	
 	
-	            console.log(article);
-	            console.log(actionUrls);
 	            var actions = user ? _react2.default.createElement(
 	                'div',
 	                null,
@@ -21836,7 +21780,7 @@ var index =
 	                        'a',
 	                        { className: 'delete-article', href: '#', onClick: function onClick(e) {
 	                                e.preventDefault();
-	                                _this2.deleteArticle(actionUrls.deleteArticleUrl, article);
+	                                _this2.deleteArticle(deleteArticleUrl, article);
 	                            } },
 	                        'Remove'
 	                    )
@@ -21846,7 +21790,7 @@ var index =
 	                    null,
 	                    _react2.default.createElement(
 	                        'a',
-	                        { className: 'update-article', href: actionUrls.updateArticleUrl },
+	                        { className: 'update-article', href: updateArticleUrl },
 	                        'Update'
 	                    )
 	                )
@@ -21861,31 +21805,7 @@ var index =
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'image' },
-	                        user ? _react2.default.createElement(
-	                            'div',
-	                            null,
-	                            _react2.default.createElement(
-	                                'div',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { className: 'delete-article', href: '#', onClick: function onClick(e) {
-	                                            e.preventDefault();
-	                                            _this2.deleteArticle(actionUrls.deleteArticleUrl, article);
-	                                        } },
-	                                    'Remove'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { className: 'update-article', href: actionUrls.updateArticleUrl },
-	                                    'Update'
-	                                )
-	                            )
-	                        ) : '',
+	                        actions,
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'floater' },
@@ -21902,7 +21822,7 @@ var index =
 	                        { className: 'title' },
 	                        _react2.default.createElement(
 	                            'a',
-	                            { href: actionUrls.detailArticleUrl },
+	                            { href: detailArticleUrl },
 	                            article.title
 	                        )
 	                    ),
@@ -21937,39 +21857,8 @@ var index =
 	    return Article;
 	}(_react2.default.Component);
 	
-	//return (
-	//    <div className="article-container">
-	//        <div className="body">
-	//            <div className="image">
-	//                {actions}
-	//                <div className="floater">
-	//                    <a href="http://www.abc.net.au/news/2016-12-28/australia-pakistan-mcg-second-test-day-three/8151468"
-	//                       target="_blank">
-	//                        <img src="http://www.abc.net.au/news/image/8151536-1x1-700x700.jpg"/>
-	//                    </a>
-	//                </div>
-	//            </div>
-	//            <div className="title">
-	//                <a href={actionUrls.detailArticleUrl}>
-	//                    {article.title}
-	//                </a>
-	//            </div>
-	//            <div className="author">
-	//                {article.user.name}
-	//            </div>
-	//            <div className="description">
-	//                {article.content}
-	//            </div>
-	//            <div className="publish-at">
-	//                {article.createdDate}
-	//            </div>
-	//        </div>
-	//    </div>
-	//);
-	
-	
 	exports.default = Article;
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=articlesBundle.js.map

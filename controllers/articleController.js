@@ -6,9 +6,6 @@ var ArticleService = require('../services/articleService');
 var UrlsHelper = require('../helpers/urlsHelper');
 var layout = require('../templates/layout/reactLayout');
 
-import Index from '../public/js/Pages/Index';
-
-
 class ArticleController extends BaseController {
     constructor(req, res, next) {
         super(req, res);
@@ -20,7 +17,7 @@ class ArticleController extends BaseController {
     }
 
     index() {
-        let user;
+      let user;
         if (this.req.user) {
             user = this.req.user.username;
         }
@@ -39,11 +36,10 @@ class ArticleController extends BaseController {
                             obj.updateArticleUrl = UrlsHelper.getUpdateViewUrl(this.req.protocol, this.req.headers.host, data[i]._id);
                             articles.push({article: data[i], actionUrls: obj});
                         }
-
                         const initialState = { user, articles };
                         var Component = Index.default;
                         let renderedString = ReactDOMServer.renderToString(<Component {...initialState} />);
-                        this.renderViewReact(this.res, 'Articles', renderedString, initialState);
+                        this.renderViewReact(this.res, 'Articles', renderedString, initialState, '../build/articlesBundle.js');
                     }
                 }).catch((err) => {
                     console.log(err);
@@ -52,20 +48,30 @@ class ArticleController extends BaseController {
     }
 
     details(articleId) {
+      let user;
+          if (this.req.user) {
+              user = this.req.user.username;
+          }
 
-        this.articleService.getArticleById(articleId).then((article) => {
-                var renderData = {
-                    article: article,
-                    deleteArticleUrl: UrlsHelper.getDeleteUrl(this.req.protocol, this.req.headers.host),
-                    updateArticleUrl: UrlsHelper.getUpdateViewUrl(this.req.protocol, this.req.headers.host, article._id)
-                }
+      require(["../public/js/Pages/Details"],
+          (Details) => {
+              this.articleService.getArticleById(articleId).then((article) => {
+                  if (!article) {
+                      console.log(article);
+                  } else {
 
-                this.renderView(this.res, 'articleDetails', renderData);
-            },
-            function (err) {
-                throw err;
-            }
-        );
+                      let deleteArticleUrl = UrlsHelper.getDeleteUrl(this.req.protocol, this.req.headers.host);
+                      let updateArticleUrl = UrlsHelper.getUpdateViewUrl(this.req.protocol, this.req.headers.host, article._id);
+
+                      const initialState = { user, article, deleteArticleUrl, updateArticleUrl };
+                      var Component = Details.default;
+                      let renderedString = ReactDOMServer.renderToString(<Component {...initialState} />);
+                      this.renderViewReact(this.res, 'Article Details', renderedString, initialState, '../build/detailsBundle.js');
+                  }
+              }).catch((err) => {
+                  console.log(err);
+              });
+          });
     }
 
     delete(articleId) {
@@ -82,32 +88,52 @@ class ArticleController extends BaseController {
     }
 
     createArticleView(articleId) {
-        console.log("????");
-        var renderData = {};
 
-        if (articleId) {
-            this.articleService.getArticleById(articleId).then((article) => {
-                renderData.actionUrl = UrlsHelper.getUpdatePutUrl(this.req.protocol, this.req.headers.host);
-                renderData.articleId = article._id;
-                renderData.title = article.title;
-                renderData.content = article.content;
-                renderData.userId = article.user.id;
-                renderData.userName = article.user.name;
+      require(["../public/js/Pages/CreateUpdateArticle"],
+          (CreateUpdateArticle) => {
+            if (articleId) {
+                this.articleService.getArticleById(articleId).then((article) => {
+                  if (!article) {
+                      console.log(article);
+                  } else {
 
-                this.renderView(this.res, 'createUpdateArticle', renderData);
-            });
+                    let actionUrl = UrlsHelper.getUpdatePutUrl(this.req.protocol, this.req.headers.host);
+                    let articleId = article._id;
+                    let title = article.title;
+                    let content = article.content;
+                    let userId = article.user.id;
+                    let userName = article.user.name;
+                    let authUserName = this.req.user.username;
+                    let btnText = "Update";
 
-        } else {
-            renderData.actionUrl = UrlsHelper.getCreateUrl(this.req.protocol, this.req.headers.host);
-            renderData.articleId = '';
-            renderData.title = '';
-            renderData.content = '';
-            renderData.userId = this.req.user._id;
-            renderData.userName = this.req.user.username;
+                    const initialState = { actionUrl, articleId, title, content, userId, userName, btnText, authUserName };
+                    var Component = CreateUpdateArticle.default;
+                    let renderedString = ReactDOMServer.renderToString(<Component {...initialState} />);
+                    this.renderViewReact(this.res, 'Update Article', renderedString, initialState, '');
+                  }
+                }).catch((err) => {
+                    console.log(err);
+                });
 
-            this.renderView(this.res, 'createUpdateArticle', renderData);
-        }
-    }
+            } else {
+
+                let actionUrl = UrlsHelper.getCreateUrl(this.req.protocol, this.req.headers.host);
+                let articleId = '';
+                let title = '';
+                let content = '';
+                let userId = this.req.user._id;
+                let userName = this.req.user.username;
+                let authUserName = this.req.user.username;
+                let btnText = "Create";
+
+                const initialState = { actionUrl, articleId, title, content, userId, userName, btnText, authUserName };
+                var Component = CreateUpdateArticle.default;
+                let renderedString = ReactDOMServer.renderToString(<Component {...initialState} />);
+                this.renderViewReact(this.res, 'Create Article', renderedString, initialState, '');
+            }
+          }
+        );
+  }
 
     createArticleAction(model) {
 
@@ -130,11 +156,12 @@ class ArticleController extends BaseController {
         });
     }
 
-    renderViewReact(res, title, renderedString, initialState) {
+    renderViewReact(res, title, renderedString, initialState, reactBundlePath) {
         res.send(layout({
             body: renderedString,
             title: title,
-            initialState: JSON.stringify(initialState)
+            initialState: JSON.stringify(initialState),
+            reactBundlePath: reactBundlePath
         }));
     }
 

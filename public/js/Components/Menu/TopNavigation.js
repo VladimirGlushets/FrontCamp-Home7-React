@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 export default class TopNavigation extends React.Component {
     constructor(props) {
@@ -9,13 +10,13 @@ export default class TopNavigation extends React.Component {
         let { user } = this.props;
 
         return (
-            <nav class="navbar" role="navigation">
-                <ul class="nav navbar-nav">
+            <nav className="navbar" role="navigation">
+                <ul className="nav navbar-nav">
                     <li>
                         <a href="/">Home</a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul className="nav navbar-nav navbar-right">
                     <li>
                         {user ?
                             <a href="/logout">Log Out</a>

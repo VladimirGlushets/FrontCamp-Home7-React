@@ -12,7 +12,9 @@ export default class ArticleList extends React.Component {
             return (<Article
                 key={data.article._id}
                 article={data.article}
-                actionUrls={data.actionUrls}
+                deleteArticleUrl={data.actionUrls.deleteArticleUrl}
+                updateArticleUrl={data.actionUrls.updateArticleUrl}
+                detailArticleUrl={data.actionUrls.detailArticleUrl}
                 user={user}
             />)
         });

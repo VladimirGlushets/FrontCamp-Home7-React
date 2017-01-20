@@ -48,8 +48,8 @@ module.exports = [{
 },
     {
         entry: {
-            index: "./public/js/index.js"
-            //indexPage: "./public/js/Pages/Index.js"
+            articlesBundle: "./public/js/ReactBundels/articlesBundle.js",
+            detailsBundle: "./public/js/ReactBundels/detailsBundle.js"
         },
 
         output: {
@@ -101,9 +101,9 @@ module.exports = [{
 
             new webpack.NoErrorsPlugin(),     // If there is an error during Assembly, the files do not generate
 
-            //new webpack.DefinePlugin({
-            //    NODE_ENV: JSON.stringify(NODE_ENV)    // for the transfer of those keys environment that you want to make available to the client
-            //}),
+            new webpack.DefinePlugin({
+               NODE_ENV: JSON.stringify(NODE_ENV)    // for the transfer of those keys environment that you want to make available to the client
+            }),
 
              //new webpack.optimize.UglifyJsPlugin({ // for minify
              //    compress: {

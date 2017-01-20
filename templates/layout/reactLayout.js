@@ -1,4 +1,4 @@
-module.exports = ({ body, title, initialState }) => {
+module.exports = ({ body, title, initialState, reactBundlePath }) => {
     return `
     <!DOCTYPE html>
     <html>
@@ -15,8 +15,8 @@ module.exports = ({ body, title, initialState }) => {
       </body>
 
      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+     <script src="${reactBundlePath}"></script>
      <script src="/js/script.js"></script>
     </html>
   `;
 };
-
