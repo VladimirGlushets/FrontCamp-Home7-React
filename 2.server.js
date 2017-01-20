@@ -169,7 +169,7 @@ exports.modules = {
 
 /***/ },
 
-/***/ 29:
+/***/ 28:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -322,7 +322,7 @@ exports.modules = {
 
 /***/ },
 
-/***/ 30:
+/***/ 29:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -345,7 +345,7 @@ exports.modules = {
 
 	var _TopNavigation2 = _interopRequireDefault(_TopNavigation);
 
-	var _Article = __webpack_require__(29);
+	var _Article = __webpack_require__(28);
 
 	var _Article2 = _interopRequireDefault(_Article);
 

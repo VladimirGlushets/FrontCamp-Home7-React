@@ -36,7 +36,8 @@ class ArticleController extends BaseController {
                             obj.updateArticleUrl = UrlsHelper.getUpdateViewUrl(this.req.protocol, this.req.headers.host, data[i]._id);
                             articles.push({article: data[i], actionUrls: obj});
                         }
-                        const initialState = { user, articles };
+                        let createNewArticleUrl = UrlsHelper.getCreateUrl(this.req.protocol, this.req.headers.host);
+                        const initialState = { user, articles, createNewArticleUrl };
                         var Component = Index.default;
                         let renderedString = ReactDOMServer.renderToString(<Component {...initialState} />);
                         this.renderViewReact(this.res, 'Articles', renderedString, initialState, '../build/articlesBundle.js');

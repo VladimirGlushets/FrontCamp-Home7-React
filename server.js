@@ -82,15 +82,15 @@ module.exports =
 	var config = __webpack_require__(11);
 
 	var articles = __webpack_require__(14);
-	var apiArticles = __webpack_require__(41);
-	var users = __webpack_require__(43);
+	var apiArticles = __webpack_require__(40);
+	var users = __webpack_require__(42);
 
 	var app = express();
 
 	// view engine setup
 	// app.set('views', path.join(__dirname, 'views'));
 	// app.set('view engine', 'jade');
-	app.engine('ejs', __webpack_require__(44)); //layout partial block
+	app.engine('ejs', __webpack_require__(43)); //layout partial block
 	app.set('views', path.join(__dirname, '/templates'));
 	app.set('view engine', 'ejs');
 
@@ -103,7 +103,7 @@ module.exports =
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	// auth settings
-	__webpack_require__(37).init(app);
+	__webpack_require__(36).init(app);
 	app.use(session({
 	    store: new MongoStore({
 	        mongooseConnection: mongoose.connection
@@ -247,9 +247,9 @@ module.exports =
 	var express = __webpack_require__(1);
 	var router = express.Router();
 	var ArticleController = __webpack_require__(15);
-	var UserController = __webpack_require__(33);
+	var UserController = __webpack_require__(32);
 	var passport = __webpack_require__(8);
-	var passportModule = __webpack_require__(37);
+	var passportModule = __webpack_require__(36);
 
 	/* GET home page. */
 	router.get('/', function (req, res, next) {
@@ -376,7 +376,8 @@ module.exports =
 	                            obj.updateArticleUrl = UrlsHelper.getUpdateViewUrl(_this2.req.protocol, _this2.req.headers.host, data[i]._id);
 	                            articles.push({ article: data[i], actionUrls: obj });
 	                        }
-	                        var initialState = { user: user, articles: articles };
+	                        var createNewArticleUrl = UrlsHelper.getCreateUrl(_this2.req.protocol, _this2.req.headers.host);
+	                        var initialState = { user: user, articles: articles, createNewArticleUrl: createNewArticleUrl };
 	                        var Component = Index.default;
 	                        var renderedString = ReactDOMServer.renderToString(React.createElement(Component, initialState));
 	                        _this2.renderViewReact(_this2.res, 'Articles', renderedString, initialState, '../build/articlesBundle.js');
@@ -396,7 +397,7 @@ module.exports =
 	                user = this.req.user.username;
 	            }
 
-	            __webpack_require__.e/* require */(2, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(30)]; (function (Details) {
+	            __webpack_require__.e/* require */(2, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(29)]; (function (Details) {
 	                _this3.articleService.getArticleById(articleId).then(function (article) {
 	                    if (!article) {
 	                        console.log(article);
@@ -434,7 +435,7 @@ module.exports =
 	        value: function createArticleView(articleId) {
 	            var _this5 = this;
 
-	            __webpack_require__.e/* require */(3, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(31)]; (function (CreateUpdateArticle) {
+	            __webpack_require__.e/* require */(3, function(__webpack_require__) { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(30)]; (function (CreateUpdateArticle) {
 	                if (articleId) {
 	                    _this5.articleService.getArticleById(articleId).then(function (article) {
 	                        if (!article) {
@@ -751,8 +752,7 @@ module.exports =
 /* 29 */,
 /* 30 */,
 /* 31 */,
-/* 32 */,
-/* 33 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -767,7 +767,7 @@ module.exports =
 
 	var BaseController = __webpack_require__(18);
 
-	var UserService = __webpack_require__(34);
+	var UserService = __webpack_require__(33);
 	var UrlsHelper = __webpack_require__(21);
 
 	var UserController = function (_BaseController) {
@@ -825,7 +825,7 @@ module.exports =
 	module.exports = UserController;
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -834,7 +834,7 @@ module.exports =
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var User = __webpack_require__(35).User;
+	var User = __webpack_require__(34).User;
 
 	var UserService = function () {
 	    function UserService() {
@@ -874,12 +874,12 @@ module.exports =
 	module.exports = UserService;
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var crypto = __webpack_require__(36);
+	var crypto = __webpack_require__(35);
 
 	var mongoose = __webpack_require__(9);
 	var Schema = mongoose.Schema;
@@ -933,10 +933,21 @@ module.exports =
 	exports.User = mongoose.model('User', schema);
 
 /***/ },
-/* 36 */
+/* 35 */
 /***/ function(module, exports) {
 
 	module.exports = require("crypto");
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = {
+	  init: __webpack_require__(37),
+	  middleware: __webpack_require__(39)
+	};
 
 /***/ },
 /* 37 */
@@ -944,24 +955,13 @@ module.exports =
 
 	'use strict';
 
-	module.exports = {
-	  init: __webpack_require__(38),
-	  middleware: __webpack_require__(40)
-	};
-
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
 	var passport = __webpack_require__(8);
-	var LocalStrategy = __webpack_require__(39).Strategy;
+	var LocalStrategy = __webpack_require__(38).Strategy;
 
-	var UserService = __webpack_require__(34);
+	var UserService = __webpack_require__(33);
 	var userService = new UserService();
 
-	var authenticationMiddleware = __webpack_require__(40);
+	var authenticationMiddleware = __webpack_require__(39);
 
 	function findUserByEmail(email, callback) {
 	    userService.getUser(email).then(function (user) {
@@ -1014,13 +1014,13 @@ module.exports =
 	module.exports = initPassport;
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports) {
 
 	module.exports = require("passport-local");
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1037,14 +1037,14 @@ module.exports =
 	module.exports = authenticationMiddleware;
 
 /***/ },
-/* 41 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var express = __webpack_require__(1);
 	var router = express.Router();
-	var ApiArticleController = __webpack_require__(42);
+	var ApiArticleController = __webpack_require__(41);
 
 	/* GET /api/articles */
 	router.get('/', function (req, res, next) {
@@ -1096,7 +1096,7 @@ module.exports =
 	module.exports = router;
 
 /***/ },
-/* 42 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1204,14 +1204,14 @@ module.exports =
 	module.exports = ApiArticleController;
 
 /***/ },
-/* 43 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var express = __webpack_require__(1);
 	var router = express.Router();
-	var UserController = __webpack_require__(33);
+	var UserController = __webpack_require__(32);
 
 	router.get('/create', function (req, res, next) {
 	  var controller = new UserController(req, res, next);
@@ -1226,7 +1226,7 @@ module.exports =
 	module.exports = router;
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports) {
 
 	module.exports = require("ejs-locals");

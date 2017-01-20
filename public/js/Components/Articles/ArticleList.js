@@ -1,12 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
-import UrlConstants from '../../Constants/UrlConstants'
 import Article from './Article';
 
 export default class ArticleList extends React.Component {
 
     render() {
-        let { articles, user } = this.props;
+        let { articles, user, createNewArticleUrl } = this.props;
+
+        console.log(createNewArticleUrl);
 
         let articlesComponents = articles.map((data) => {
             return (<Article
@@ -22,7 +23,7 @@ export default class ArticleList extends React.Component {
         return (
             <div>
                 <div className="create-btn">
-                    <a className="create-link" href={UrlConstants.CreateNewArticleUrl}>Create New</a>
+                    <a className="create-link" href={createNewArticleUrl}>Create New</a>
                 </div>
                 {articlesComponents}
             </div>

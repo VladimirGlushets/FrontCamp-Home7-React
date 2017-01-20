@@ -10,7 +10,7 @@ export default class Index extends React.Component {
     }
 
     render() {
-        let { user, articles } = this.props;
+        let { user, articles, createNewArticleUrl } = this.props;
 
         return (
             <div>
@@ -18,7 +18,11 @@ export default class Index extends React.Component {
                 <div className="content-container">
                     <TopNavigation user={user}/>
                     <div id="content" class="content-container">
-                        <ArticleList articles={articles} user={user} />
+                        <ArticleList
+                          articles={articles}
+                          user={user}
+                          createNewArticleUrl={createNewArticleUrl}
+                          />
                     </div>
                 </div>
             </div>

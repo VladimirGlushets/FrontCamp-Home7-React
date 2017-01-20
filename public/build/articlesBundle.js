@@ -63,7 +63,11 @@ var articlesBundle =
 	
 	var renderContainer = document.getElementById('content');
 	if (renderContainer) {
-	  _reactDom2.default.render(_react2.default.createElement(_ArticleList2.default, { articles: __APP_INITIAL_STATE__.articles, user: __APP_INITIAL_STATE__.user }), renderContainer);
+	  _reactDom2.default.render(_react2.default.createElement(_ArticleList2.default, {
+	    articles: __APP_INITIAL_STATE__.articles,
+	    user: __APP_INITIAL_STATE__.user,
+	    createNewArticleUrl: __APP_INITIAL_STATE__.createNewArticleUrl
+	  }), renderContainer);
 	}
 
 /***/ },
@@ -21562,11 +21566,7 @@ var articlesBundle =
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _UrlConstants = __webpack_require__(181);
-	
-	var _UrlConstants2 = _interopRequireDefault(_UrlConstants);
-	
-	var _Article = __webpack_require__(182);
+	var _Article = __webpack_require__(181);
 	
 	var _Article2 = _interopRequireDefault(_Article);
 	
@@ -21592,8 +21592,11 @@ var articlesBundle =
 	        value: function render() {
 	            var _props = this.props,
 	                articles = _props.articles,
-	                user = _props.user;
+	                user = _props.user,
+	                createNewArticleUrl = _props.createNewArticleUrl;
 	
+	
+	            console.log(createNewArticleUrl);
 	
 	            var articlesComponents = articles.map(function (data) {
 	                return _react2.default.createElement(_Article2.default, {
@@ -21614,7 +21617,7 @@ var articlesBundle =
 	                    { className: 'create-btn' },
 	                    _react2.default.createElement(
 	                        'a',
-	                        { className: 'create-link', href: _UrlConstants2.default.CreateNewArticleUrl },
+	                        { className: 'create-link', href: createNewArticleUrl },
 	                        'Create New'
 	                    )
 	                ),
@@ -21695,20 +21698,6 @@ var articlesBundle =
 
 /***/ },
 /* 181 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-	    SourceArticlesUrl: 'http://localhost:3000/api/articles',
-	    CreateNewArticleUrl: 'http://localhost:3000/articles/create'
-	};
-
-/***/ },
-/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

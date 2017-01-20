@@ -55,7 +55,7 @@ var detailsBundle =
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Article = __webpack_require__(182);
+	var _Article = __webpack_require__(181);
 	
 	var _Article2 = _interopRequireDefault(_Article);
 	
@@ -21615,8 +21615,7 @@ var detailsBundle =
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 181 */,
-/* 182 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

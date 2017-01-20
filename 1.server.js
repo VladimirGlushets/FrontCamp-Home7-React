@@ -50,7 +50,8 @@ exports.modules = {
 	        value: function render() {
 	            var _props = this.props,
 	                user = _props.user,
-	                articles = _props.articles;
+	                articles = _props.articles,
+	                createNewArticleUrl = _props.createNewArticleUrl;
 
 
 	            return _react2.default.createElement(
@@ -64,7 +65,11 @@ exports.modules = {
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'content', 'class': 'content-container' },
-	                        _react2.default.createElement(_ArticleList2.default, { articles: articles, user: user })
+	                        _react2.default.createElement(_ArticleList2.default, {
+	                            articles: articles,
+	                            user: user,
+	                            createNewArticleUrl: createNewArticleUrl
+	                        })
 	                    )
 	                )
 	            );
@@ -265,11 +270,7 @@ exports.modules = {
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _UrlConstants = __webpack_require__(28);
-
-	var _UrlConstants2 = _interopRequireDefault(_UrlConstants);
-
-	var _Article = __webpack_require__(29);
+	var _Article = __webpack_require__(28);
 
 	var _Article2 = _interopRequireDefault(_Article);
 
@@ -295,8 +296,11 @@ exports.modules = {
 	        value: function render() {
 	            var _props = this.props,
 	                articles = _props.articles,
-	                user = _props.user;
+	                user = _props.user,
+	                createNewArticleUrl = _props.createNewArticleUrl;
 
+
+	            console.log(createNewArticleUrl);
 
 	            var articlesComponents = articles.map(function (data) {
 	                return _react2.default.createElement(_Article2.default, {
@@ -317,7 +321,7 @@ exports.modules = {
 	                    { className: 'create-btn' },
 	                    _react2.default.createElement(
 	                        'a',
-	                        { className: 'create-link', href: _UrlConstants2.default.CreateNewArticleUrl },
+	                        { className: 'create-link', href: createNewArticleUrl },
 	                        'Create New'
 	                    )
 	                ),
@@ -334,21 +338,6 @@ exports.modules = {
 /***/ },
 
 /***/ 28:
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-	    SourceArticlesUrl: 'http://localhost:3000/api/articles',
-	    CreateNewArticleUrl: 'http://localhost:3000/articles/create'
-	};
-
-/***/ },
-
-/***/ 29:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
